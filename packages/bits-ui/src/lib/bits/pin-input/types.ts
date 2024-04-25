@@ -1,49 +1,28 @@
-import type { HTMLInputAttributes } from "svelte/elements";
-import type { CreatePinInputProps as MeltPinInputProps } from "@melt-ui/svelte";
-import type {
-	DOMElement,
-	Expand,
-	HTMLDivAttributes,
-	OmitIds,
-	OmitValue,
-	OnChangeFn,
-} from "$lib/internal/index.js";
-import type { CustomEventHandler } from "$lib/index.js";
+import type { OnChangeFn } from "$lib/internal/types.js";
 
-export type PinInputPropsWithoutHTML = Expand<
-	OmitIds<
-		OmitValue<MeltPinInputProps> & {
-			/**
-			 * The value pin-input, which is an array of strings.
-			 *
-			 * You can bind to this to programmatically control the value.
-			 */
-			value?: MeltPinInputProps["defaultValue"];
+export type PinInputProps = {
+	value?: string;
 
-			/**
-			 * A callback function called when the value changes.
-			 */
-			onValueChange?: OnChangeFn<MeltPinInputProps["defaultValue"]>;
-		} & DOMElement
-	>
->;
+	onValueChange?: OnChangeFn<string>;
 
-export type PinInputInputPropsWithoutHTML = DOMElement<HTMLInputElement>;
+	/**
+	 * The number of digits in the pin input.
+	 */
+	maxLength: number;
 
-export type PinInputHiddenInputPropsWithoutHTML = DOMElement<HTMLInputElement>;
-//
+	/**
+	 * The alignment of the text within the inputs.
+	 */
+	textAlign?: "left" | "center" | "right";
 
-export type PinInputProps = PinInputPropsWithoutHTML & HTMLDivAttributes;
+	/**
+	 * A callback that is called when the pin input is complete.
+	 */
+	onComplete?: (...args: unknown[]) => void;
 
-export type PinInputInputProps = PinInputInputPropsWithoutHTML & HTMLInputAttributes;
+	pushPasswordManagerStrategy?: "increase-width" | "none";
 
-export type PinInputHiddenInputProps = PinInputHiddenInputPropsWithoutHTML & HTMLInputAttributes;
+	containerClassName?: string;
 
-export type PinInputInputEvents = {
-	keydown: CustomEventHandler<KeyboardEvent, HTMLInputElement>;
-	input: CustomEventHandler<InputEvent, HTMLInputElement>;
-	paste: CustomEventHandler<ClipboardEvent, HTMLInputElement>;
-	change: CustomEventHandler<Event, HTMLInputElement>;
-	focus: CustomEventHandler<FocusEvent, HTMLInputElement>;
-	blur: CustomEventHandler<FocusEvent, HTMLInputElement>;
+	noScriptCSSFallback?: string | null;
 };
